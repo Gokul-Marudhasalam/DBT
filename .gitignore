@@ -6,6 +6,6 @@ dist/
 wheels/
 *.egg-info
 dbt_learn/profiles.yml
-
+**/profiles.yml
 # Virtual environments
 .venv
