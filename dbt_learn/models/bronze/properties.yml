@@ -1,21 +1,55 @@
+
 version: 2
 
 models:
   - name: bronze_date
     config:
       materialized: view
+
   - name: bronze_store
     config:
       materialized: view
+    columns:
+      - name: store_sk
+        data_tests:
+          - not_null
+          - unique
+
+      - name: country
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['USA', 'Canada', 'Mexico']
+              config:
+                severity: warn
+
   - name: bronze_customers
     config:
       materialized: view
+    columns:
+      - name: customer_sk
+        data_tests:
+          - not_null
+          - unique
+
   - name: bronze_product
     config:
       materialized: view
+
   - name: bronze_sales
     config:
       materialized: table
+    columns:
+      - name: sales_id
+        data_tests:
+          - not_null
+          - unique
+      - name: gross_amount
+        data_tests:
+          - not_null
+          - generic_non_negative:
+              column_name: gross_amount
+
   - name: bronze_returns
     config:
       materialized: table
